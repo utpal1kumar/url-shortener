@@ -6,7 +6,7 @@ require('dotenv').config();   // load .env file
 const app = express();
 app.use(express.json());
 
-// ✅ Atlas connection
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -14,7 +14,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ Connected to MongoDB Atlas"))
 .catch(err => console.error("❌ Connection error:", err));
 
-// Schema & Model
+
 const urlSchema = new mongoose.Schema({
   shortId: { type: String, unique: true },
   longUrl: { type: String, required: true },
@@ -23,7 +23,7 @@ const urlSchema = new mongoose.Schema({
 
 const Url = mongoose.model('Url', urlSchema);
 
-// POST /shortUrl
+
 app.post('/shortUrl', async (req, res) => {
   try {
     const { longUrl } = req.body;
@@ -39,7 +39,6 @@ app.post('/shortUrl', async (req, res) => {
   }
 });
 
-// GET /:shortId
 app.get('/:shortId', async (req, res) => {
   try {
     const { shortId } = req.params;
@@ -56,7 +55,7 @@ app.get('/:shortId', async (req, res) => {
   }
 });
 
-// PATCH /:shortId
+
 app.patch('/:shortId', async (req, res) => {
   try {
     const { shortId } = req.params;
